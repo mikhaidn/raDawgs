@@ -1,0 +1,109 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var path = '/sys/class/gpio/';
+var Blynk = require('blynk-library');
+var AUTH = '941c0bde9dfe43df9f5c334ae792a64f';
+var blynk = new Blynk.Blynk(AUTH);
+var pins = [2, 3, 4, 5, 30, 31, 48, 50, 51, 60];
+var delay = 500;
+
+// Virtual pins for Blynk
+var v0 = new blynk.VirtualPin(0);
+var v1 = new blynk.VirtualPin(1);
+var v2 = new blynk.VirtualPin(2);
+var v3 = new blynk.VirtualPin(3);
+var v4 = new blynk.VirtualPin(4);
+var v5 = new blynk.VirtualPin(5);
+var v6 = new blynk.VirtualPin(6);
+var v7 = new blynk.VirtualPin(7);
+var v8 = new blynk.VirtualPin(8);
+var v9 = new blynk.VirtualPin(9);
+
+// Setting GPIOs up as outputs
+for(var i in pins) {
+     setTimeout(function() {fs.writeFile(path + 'export', i, done);
+     }, delay);
+     setTimeout(function() {fs.writeFile(path + 'gpio' + i.toString() + '/direction', 'out', done);
+     }, delay);
+     }
+
+
+// fs.writeFile(path + 'export', 30, done); // v0 - domke
+// fs.writeFile(path + 'export', 60, done); // v1 - gabbi
+// fs.writeFile(path + 'export', 31, done); // v2 - cole 
+// fs.writeFile(path + 'export', 50, done); // v3 - vibha
+// fs.writeFile(path + 'export', 48, done); // v4 - bailey
+// fs.writeFile(path + 'export', 51, done); // v5 - randy
+// fs.writeFile(path + 'export', 5, done); // v6 - off campus
+// fs.writeFile(path + 'export', 4, done); // v7 - around campus
+// fs.writeFile(path + 'export', 3, done); // v8 - class
+// fs.writeFile(path + 'export', 2, done); // v9 - apartments
+
+// fs.writeFile(path + 'gpio30/direction', 'out', done);
+// fs.writeFile(path + 'gpio60/direction', 'out', done);
+// fs.writeFile(path + 'gpio31/direction', 'out', done);
+// fs.writeFile(path + 'gpio50/direction', 'out', done);
+// fs.writeFile(path + 'gpio48/direction', 'out', done);
+// fs.writeFile(path + 'gpio51/direction', 'out', done);
+// fs.writeFile(path + 'gpio5/direction', 'out', done);
+// fs.writeFile(path + 'gpio4/direction', 'out', done);
+// fs.writeFile(path + 'gpio3/direction', 'out', done);
+// fs.writeFile(path + 'gpio2/direction', 'out', done);
+
+
+// DUTY
+v0.on('write', function(param) { // domke
+  console.log('V0:', param[0]);
+  fs.writeFile(path + 'gpio30/value', param[0], done);
+});
+
+v1.on('write', function(param) { // gabbi
+  console.log('V1:', param[0]); 
+  fs.writeFile(path + 'gpio60/value', param[0], done);
+});
+
+v2.on('write', function(param) { // cole 
+  console.log('V2:', param[0]);
+  fs.writeFile(path + 'gpio31/value', param[0], done);
+});
+
+v3.on('write', function(param) { // vibha
+  console.log('V3:', param[0]);
+  fs.writeFile(path + 'gpio50/value', param[0], done);
+});
+
+v4.on('write', function(param) { // bailey
+  console.log('V4:', param[0]);
+  fs.writeFile(path + 'gpio48/value', param[0], done);
+});
+
+v5.on('write', function(param) { // randy
+  console.log('V5:', param[0]);
+  fs.writeFile(path + 'gpio51/value', param[0], done);
+});
+
+// LOCATION
+v6.on('write', function(param) { // off campus
+  console.log('V6:', param[0]);
+  fs.writeFile(path + 'gpio5/value', param[0], done);
+});
+
+v7.on('write', function(param) { // around campus
+  console.log('V7:', param[0]);
+  fs.writeFile(path + 'gpio4/value', param[0], done);
+});
+
+v8.on('write', function(param) { // class
+  console.log('V8:', param[0]);
+  fs.writeFile(path + 'gpio3/value', param[0], done);
+});
+
+v9.on('write', function(param) { // apartments
+  console.log('V9:', param[0]);
+  fs.writeFile(path + 'gpio2/value', param[0], done);
+});
+
+function done() {
+  console.log("Done");
+}
